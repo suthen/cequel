@@ -1,5 +1,14 @@
 require 'active_support/core_ext'
-require 'cassandra-cql'
+
+# If a version of Cassandra is specified in the cequel require, propagate that
+# requirement to cassandra-cql. Otherwise, use the default that cassandra-cql
+# uses (i.e. Cassandara 1.1)
+if Cequel.respond_to?(:CASSANDRA_VERSION)
+  require "cassandra-cql/#{Cequel.CASSANDRA_VERSION}"
+else
+  require 'cassandra-cql'
+end
+
 require 'connection_pool'
 
 require 'cequel/batch'
